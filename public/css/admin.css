@@ -1,0 +1,229 @@
+/* ========================================================
+   THE NICE PARK RUMPIN - TICKET FAIRY STYLE (ADMIN)
+   - Deep Black / Dark Slate Palette (#050507 / #0d0e13)
+   - Solid Flat Accent Green (#00e676)
+   - 100% Solid Flat Colors (NO GRADIENTS)
+   - High-End SaaS Event Operations Dashboard
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --admin-bg: #050507;
+    --admin-sidebar: #090a0d;
+    --admin-card: #0e0f14;
+    --admin-card-hover: #14151c;
+    --admin-border: #1c1e28;
+    --admin-card-border: #222532;
+
+    --admin-primary: #00e676;
+    --admin-primary-hover: #00c853;
+    --admin-primary-text: #050806;
+
+    --admin-text: #ffffff;
+    --admin-muted: #9596a6;
+    --admin-sub: #5f6070;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.admin-body {
+    background-color: var(--admin-bg);
+    color: var(--admin-text);
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+/* ========================================================
+   SIDEBAR
+   ======================================================== */
+.admin-sidebar {
+    width: 255px;
+    background-color: var(--admin-sidebar);
+    border-right: 1px solid var(--admin-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.sidebar-brand {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid var(--admin-border);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+.sidebar-brand span {
+    color: var(--admin-primary);
+}
+
+.sidebar-nav {
+    padding: 1.5rem 0;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.nav-section-label {
+    padding: 0.6rem 1.5rem 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--admin-sub);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.nav-item {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    color: var(--admin-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.nav-item:hover {
+    background-color: #12131a;
+    color: #ffffff;
+}
+
+.nav-item.active {
+    background-color: #12171c;
+    color: #ffffff;
+    border-left-color: var(--admin-primary);
+    font-weight: 700;
+}
+
+.sidebar-footer {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid var(--admin-border);
+}
+
+/* ========================================================
+   MAIN CONTENT AREA
+   ======================================================== */
+.admin-main {
+    margin-left: 255px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.admin-topbar {
+    height: 72px;
+    background-color: #050507;
+    border-bottom: 1px solid var(--admin-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.topbar-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.topbar-user {
+    font-size: 0.85rem;
+    color: var(--admin-muted);
+}
+
+.topbar-user strong {
+    color: #ffffff;
+}
+
+.admin-content {
+    padding: 2.25rem;
+    flex: 1;
+}
+
+/* ========================================================
+   DASHBOARD STATS GRID (SOLID TICKET FAIRY STYLE)
+   ======================================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: var(--admin-card);
+    border: 1px solid var(--admin-card-border);
+    border-radius: 6px;
+    padding: 1.5rem;
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: var(--admin-sub);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+.stat-border-green { border-top: 3px solid #00e676; }
+.stat-border-blue { border-top: 3px solid #38bdf8; }
+.stat-border-orange { border-top: 3px solid #f59e0b; }
+.stat-border-cyan { border-top: 3px solid #10b981; }
+
+/* Filter bar */
+.filter-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

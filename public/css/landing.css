@@ -1,0 +1,537 @@
+/* ========================================================
+   THE NICE PARK RUMPIN - TICKET FAIRY STYLE (LANDING)
+   Inspired by Ticket Fairy Esports & Gaming Solutions:
+   - Deep Black Background (#050507)
+   - High-Contrast Electric Action Green (#00e676 / #00c853)
+   - 100% Solid Flat Colors (NO GRADIENTS)
+   - Bold, Authoritative Tech / Gaming Event Typography
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-dark: #050507;
+    --bg-card: #0d0e13;
+    --bg-card-hover: #13141b;
+    --bg-card-highlight: #11141d;
+    --border-color: #1a1c24;
+    --border-card: #20232e;
+
+    /* Ticket Fairy Action Green (Solid Flat - No Gradient) */
+    --color-primary: #00e676;
+    --color-primary-hover: #00c853;
+    --color-primary-text: #050806;
+
+    --color-secondary: #1a1c24;
+    --color-secondary-hover: #232631;
+
+    --text-main: #ffffff;
+    --text-muted: #9596a6;
+    --text-sub: #5f6070;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ========================================================
+   NAVBAR (TICKET FAIRY MINIMAL BLACK)
+   ======================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background-color: #050507;
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.brand-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.brand-logo span {
+    color: var(--color-primary);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* ========================================================
+   HERO SECTION (TICKET FAIRY STYLE HERO)
+   ======================================================== */
+.hero {
+    padding: 150px 0 90px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-dark);
+}
+
+.hero-tag {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    background-color: #0f1c15;
+    border: 1px solid #143823;
+    color: var(--color-primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.12;
+    color: #ffffff;
+    letter-spacing: -0.035em;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title span {
+    color: var(--color-primary);
+}
+
+.hero-desc {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    max-width: 680px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 4rem;
+}
+
+/* Stats Ribbon (Ticket Fairy metrics bar) */
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border-card);
+    background-color: var(--bg-card);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.stat-box {
+    padding: 1.5rem;
+    border-right: 1px solid var(--border-color);
+}
+
+.stat-box:last-child {
+    border-right: none;
+}
+
+.stat-val {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+.stat-val span {
+    color: var(--color-primary);
+}
+
+.stat-lbl {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
+/* ========================================================
+   SECTIONS GENERAL
+   ======================================================== */
+.section {
+    padding: 85px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-head {
+    margin-bottom: 3.5rem;
+}
+
+.section-tag {
+    font-size: 0.8rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 600px;
+}
+
+/* ========================================================
+   TICKET CARDS (TICKET FAIRY EVENT PASS TIER STYLE)
+   ======================================================== */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.item-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 8px;
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.item-card:hover {
+    background-color: var(--bg-card-hover);
+    border-color: #2f3342;
+}
+
+.item-card.highlight {
+    border-color: var(--color-primary);
+    background-color: #0f1619;
+}
+
+.card-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+}
+
+.card-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.card-summary {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+}
+
+.card-price-box {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.price-currency {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-right: 0.25rem;
+}
+
+.price-number {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.price-unit {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+}
+
+.card-features-list {
+    list-style: none;
+    margin-bottom: 2rem;
+    flex: 1;
+}
+
+.card-features-list li {
+    font-size: 0.875rem;
+    color: var(--text-main);
+    padding: 0.45rem 0;
+    border-bottom: 1px solid #161821;
+}
+
+/* ========================================================
+   WORKFLOW STEPS (TICKET FAIRY SOLUTION ARCHITECTURE)
+   ======================================================== */
+.steps-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3.5rem;
+}
+
+.step-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 6px;
+    padding: 1.75rem;
+}
+
+.step-num {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.step-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.step-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* ========================================================
+   INFO SECTION
+   ======================================================== */
+.info-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.info-item {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 6px;
+    padding: 1.75rem;
+}
+
+.info-item h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.info-item p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* ========================================================
+   BUTTONS
+   ======================================================== */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-family: inherit;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+    color: #000000;
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: #ffffff;
+    border-color: var(--border-card);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-secondary-hover);
+    border-color: var(--text-sub);
+    color: #ffffff;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* ========================================================
+   FOOTER (TICKET FAIRY FOOTER STYLE)
+   ======================================================== */
+.footer {
+    background-color: #030304;
+    border-top: 1px solid var(--border-color);
+    padding: 4rem 0 2rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-brand h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+}
+
+.footer-brand p {
+    color: var(--text-sub);
+    font-size: 0.875rem;
+    max-width: 350px;
+    line-height: 1.7;
+}
+
+.footer-col h5 {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-col a {
+    color: var(--text-sub);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.footer-col a:hover {
+    color: var(--color-primary);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--text-sub);
+}
+
+@media (max-width: 900px) {
+    .cards-grid, .steps-row, .info-row, .hero-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .cards-grid, .steps-row, .info-row, .footer-grid, .hero-stats {
+        grid-template-columns: 1fr;
+    }
+    .hero-title {
+        font-size: 2.25rem;
+    }
+    .stat-box {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .stat-box:last-child {
+        border-bottom: none;
+    }
+}

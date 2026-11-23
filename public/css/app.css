@@ -1,0 +1,531 @@
+/* ========================================================
+   THE NICE PARK RUMPIN - TICKET FAIRY STYLE (FLAT DARK)
+   Inspired by Ticket Fairy Esports & Gaming Solutions:
+   - Deep Black / Dark Slate Palette (#08080a / #101116)
+   - High-Contrast Electric Action Green (#00e676 / #00c853)
+   - 100% Solid Flat Colors (NO GRADIENTS)
+   - Crisp Professional Typography (Plus Jakarta Sans & Inter)
+   - Zero Cheesy Icons, Clean Minimalist UI
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #08080a;
+    --bg-card: #101116;
+    --bg-card-hover: #15161d;
+    --bg-card-active: #171822;
+    --bg-input: #0a0b0e;
+    --bg-nav: #08080a;
+
+    --border-color: #1e2029;
+    --border-card: #242633;
+    --border-focus: #00e676;
+
+    /* High-contrast solid flat accent like Ticket Fairy */
+    --color-primary: #00e676;
+    --color-primary-hover: #00c853;
+    --color-primary-text: #040806;
+
+    --color-secondary: #242633;
+    --color-secondary-hover: #2e3142;
+
+    --color-success: #00e676;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-info: #38bdf8;
+
+    --text-main: #ffffff;
+    --text-muted: #9a9ba8;
+    --text-sub: #636473;
+
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .font-tech {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #ffffff;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+a:hover {
+    color: #69f0ae;
+}
+
+/* ========================================================
+   CONTAINER & LAYOUT
+   ======================================================== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-wrapper {
+    padding-top: 100px;
+    padding-bottom: 70px;
+    min-height: calc(100vh - 120px);
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+/* ========================================================
+   NAVBAR (TICKET FAIRY MINIMAL DARK)
+   ======================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background-color: #050507;
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.brand-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+}
+
+.brand-logo span {
+    color: var(--color-primary);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: color 0.15s;
+}
+
+.nav-menu a:hover, .nav-menu a.active {
+    color: #ffffff;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* ========================================================
+   BUTTONS (FLAT SOLID TICKET FAIRY STYLE - NO GRADIENTS)
+   ======================================================== */
+.btn {
+    display: inline-block;
+    padding: 0.65rem 1.35rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-family: inherit;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+    color: #000000;
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: #ffffff;
+    border-color: var(--border-card);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-secondary-hover);
+    border-color: var(--text-sub);
+    color: #ffffff;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: #ffffff;
+    border-color: var(--color-danger);
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+.btn-success {
+    background-color: var(--color-success);
+    color: #000000;
+    border-color: var(--color-success);
+}
+
+.btn-success:hover {
+    background-color: #00c853;
+}
+
+.btn-warning {
+    background-color: var(--color-warning);
+    color: #000000;
+    border-color: var(--color-warning);
+}
+
+.btn-sm {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.8rem;
+}
+
+.btn-lg {
+    padding: 0.85rem 1.75rem;
+    font-size: 0.95rem;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* ========================================================
+   CARDS & PANELS (SOLID TICKET FAIRY STYLE)
+   ======================================================== */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+}
+
+.card-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* ========================================================
+   FORMS (SOLID TICKET FAIRY DARK INPUTS)
+   ======================================================== */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-bottom: 0.45rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 0.95rem;
+    font-size: 0.9rem;
+    color: #ffffff;
+    background-color: var(--bg-input);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    transition: border-color 0.15s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--border-focus);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.form-hint {
+    font-size: 0.78rem;
+    color: var(--text-sub);
+    margin-top: 0.35rem;
+}
+
+/* ========================================================
+   BADGES & STATUS
+   ======================================================== */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+}
+
+.badge-paid, .badge-success, .badge-approved {
+    background-color: #064e3b;
+    color: #6ee7b7;
+    border-color: #059669;
+}
+
+.badge-pending, .badge-warning {
+    background-color: #451a03;
+    color: #fcd34d;
+    border-color: #d97706;
+}
+
+.badge-rejected, .badge-danger {
+    background-color: #450a0a;
+    color: #fca5a5;
+    border-color: #dc2626;
+}
+
+.badge-info {
+    background-color: #082f49;
+    color: #7dd3fc;
+    border-color: #0284c7;
+}
+
+/* ========================================================
+   TABLES
+   ======================================================== */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-card);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+.data-table th {
+    background-color: #090a0d;
+    padding: 0.85rem 1rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table td {
+    padding: 0.95rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover td {
+    background-color: var(--bg-card-hover);
+}
+
+/* ========================================================
+   PAGE HEADERS
+   ======================================================== */
+.page-header {
+    margin-bottom: 2.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+}
+
+.page-title {
+    font-size: 1.75rem;
+    color: #ffffff;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.025em;
+}
+
+.page-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ========================================================
+   FOOTER (TICKET FAIRY CLEAN BLACK)
+   ======================================================== */
+.footer {
+    background-color: #040406;
+    border-top: 1px solid var(--border-color);
+    padding: 3.5rem 0 2rem;
+    margin-top: 4rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+}
+
+.footer-brand h4 {
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    font-size: 1.05rem;
+}
+
+.footer-brand p {
+    color: var(--text-sub);
+    font-size: 0.875rem;
+    max-width: 340px;
+    line-height: 1.7;
+}
+
+.footer-col h5 {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-col a {
+    color: var(--text-sub);
+    font-size: 0.875rem;
+}
+
+.footer-col a:hover {
+    color: var(--color-primary);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--text-sub);
+}
+
+/* ========================================================
+   RESPONSIVE
+   ======================================================== */
+@media (max-width: 900px) {
+    .grid-4, .grid-3 {
+        grid-template-columns: 1fr 1fr;
+    }
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .grid-4, .grid-3 {
+        grid-template-columns: 1fr;
+    }
+    .nav-menu {
+        display: none;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
