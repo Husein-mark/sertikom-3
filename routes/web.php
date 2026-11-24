@@ -48,9 +48,18 @@ Route::get('/orders/checkout/{id}', [OrderController::class, 'checkout'])->name(
 Route::get('/orders/history', [OrderController::class, 'history'])->name('orders.history');
 Route::get('/orders/eticket/{id}', [OrderController::class, 'eticket'])->name('orders.eticket');
 Route::get('/orders/simulate-success/{id}', [OrderController::class, 'simulateSuccess'])->name('orders.simulateSuccess');
+Route::get('/orders/check-status/{id}', [OrderController::class, 'checkStatus'])->name('orders.checkStatus');
 
-// Webhook Callback Resmi Midtrans Server-to-Server
-Route::post('/midtrans/webhook', [OrderController::class, 'handleMidtransNotification'])->name('midtrans.webhook');
+// Webhook, Callback, & Finish URL Resmi Midtrans (Mendukung GET & POST di semua variasi URL)
+Route::match(['get', 'post'], '/midtrans/webhook', [OrderController::class, 'handleMidtransNotification'])->name('midtrans.webhook');
+Route::match(['get', 'post'], '/midtrans/callback', [OrderController::class, 'handleMidtransNotification'])->name('midtrans.callback');
+Route::match(['get', 'post'], '/midtrans/notification', [OrderController::class, 'handleMidtransNotification'])->name('midtrans.notification');
+Route::match(['get', 'post'], '/api/midtrans/webhook', [OrderController::class, 'handleMidtransNotification']);
+Route::match(['get', 'post'], '/api/midtrans/callback', [OrderController::class, 'handleMidtransNotification']);
+Route::match(['get', 'post'], '/api/midtrans/notification', [OrderController::class, 'handleMidtransNotification']);
+Route::match(['get', 'post'], '/midtrans/finish', [OrderController::class, 'handleMidtransFinish'])->name('midtrans.finish');
+Route::match(['get', 'post'], '/orders/finish', [OrderController::class, 'handleMidtransFinish']);
+Route::match(['get', 'post'], '/payment/finish', [OrderController::class, 'handleMidtransFinish']);
 
 // 6. Admin Portal (Protected with 'admin' middleware)
 Route::prefix('admin')->middleware(['admin'])->group(function () {

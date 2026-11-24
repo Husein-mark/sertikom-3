@@ -34,5 +34,11 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'midtrans' => [
+        'api_key' => env('MIDTRANS_API_KEY', env('KEY_MIDTRANS_API_KEY')),
+        'client_key' => env('MIDTRANS_CLIENT_KEY', env('KEY_MIDTRANS_CLIENT_KEY')),
+        'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
+        // 'enabled_payments' => explode(',', env('MIDTRANS_ENABLED_PAYMENTS', 'qris')),
+    ],
 
 ];

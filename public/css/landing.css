@@ -1,33 +1,42 @@
 /* ========================================================
-   THE NICE PARK RUMPIN - TICKET FAIRY STYLE (LANDING)
-   Inspired by Ticket Fairy Esports & Gaming Solutions:
-   - Deep Black Background (#050507)
-   - High-Contrast Electric Action Green (#00e676 / #00c853)
-   - 100% Solid Flat Colors (NO GRADIENTS)
-   - Bold, Authoritative Tech / Gaming Event Typography
+   THE NICE PARK RUMPIN - OFFICIAL TICKETING PORTAL
+   Precision Wix wh-1064 Dark Design System:
+   - Official Wix Typography: Wix Madefor Display & Wix Madefor Text
+   - Minimalist Dark Architecture: Pitch Black (#000000), Deep Gray (#080808, #0d0d0d)
+   - High-Contrast Accent Orange: #ff5000 (Hover: #e04600)
+   - Clean 1px Precision Borders (#1a1a1a, #262626)
+   - Video / Photo Cinematic Hero with Dark Blend
    ======================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@500;600;700;800;900&family=Wix+Madefor+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
-    --bg-dark: #050507;
-    --bg-card: #0d0e13;
-    --bg-card-hover: #13141b;
-    --bg-card-highlight: #11141d;
-    --border-color: #1a1c24;
-    --border-card: #20232e;
+    --bg-black: #000000;
+    --bg-darker: #060608;
+    --bg-surface: #0a0a0c;
+    --bg-card: #0e0e11;
+    --bg-card-hover: #141418;
+    --bg-card-highlight: #121217;
 
-    /* Ticket Fairy Action Green (Solid Flat - No Gradient) */
-    --color-primary: #00e676;
-    --color-primary-hover: #00c853;
-    --color-primary-text: #050806;
+    --border-subtle: #1a1a1f;
+    --border-card: #222228;
+    --border-active: #ff5000;
 
-    --color-secondary: #1a1c24;
-    --color-secondary-hover: #232631;
+    --color-primary: #ff5000;
+    --color-primary-hover: #e04600;
+    --color-primary-text: #000000;
 
-    --text-main: #ffffff;
-    --text-muted: #9596a6;
-    --text-sub: #5f6070;
+    --color-secondary: #16161c;
+    --color-secondary-hover: #202028;
+
+    --text-white: #ffffff;
+    --text-main: #e2e2e5;
+    --text-muted: #8d8d96;
+    --text-sub: #5c5c66;
+
+    --font-display: 'Wix Madefor Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-text: 'Wix Madefor Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 }
 
 *, *::before, *::after {
@@ -36,206 +45,473 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background-color: var(--bg-dark);
+    background-color: var(--bg-black);
     color: var(--text-main);
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-text);
+    font-size: 15px;
     line-height: 1.6;
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
 }
 
+h1, h2, h3, h4, h5, .brand-font, .display-font {
+    font-family: var(--font-display);
+    color: var(--text-white);
+    letter-spacing: -0.02em;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
 .container {
-    width: 90%;
+    width: 92%;
+    max-w: 1200px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 /* ========================================================
-   NAVBAR (TICKET FAIRY MINIMAL BLACK)
+   NAVBAR (SINGLE CLEAN HEADER, NO TOP BAR, NO LOGO ICON)
    ======================================================== */
 .navbar {
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
-    height: 72px;
-    background-color: #050507;
-    border-bottom: 1px solid var(--border-color);
-    z-index: 1000;
+    z-index: 100;
+    background-color: rgba(10, 11, 15, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 100%;
+    justify-content: space-between;
+    padding: 1.25rem 0;
 }
 
 .brand-logo {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.15rem;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
     font-weight: 800;
     color: #ffffff;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-    text-decoration: none;
-}
-
-.brand-logo span {
-    color: var(--color-primary);
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
 }
 
 .nav-links {
     display: flex;
+    align-items: center;
+    gap: 2.25rem;
     list-style: none;
-    gap: 2rem;
+    margin-left: auto;
 }
 
-.nav-links a {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: color 0.15s;
-}
-
-.nav-links a:hover {
+.nav-links li a,
+.nav-link-btn {
+    font-family: var(--font-text);
+    font-size: 0.9rem;
+    font-weight: 500;
     color: #ffffff;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    transition: opacity 0.2s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
-.nav-actions {
-    display: flex;
-    gap: 0.75rem;
+.nav-links li a:hover,
+.nav-link-btn:hover {
+    opacity: 0.75;
 }
 
 /* ========================================================
-   HERO SECTION (TICKET FAIRY STYLE HERO)
+   BUTTONS
    ======================================================== */
-.hero {
-    padding: 150px 0 90px;
-    border-bottom: 1px solid var(--border-color);
-    background-color: var(--bg-dark);
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
 }
 
-.hero-tag {
-    display: inline-block;
-    padding: 0.35rem 0.85rem;
-    background-color: #0f1c15;
-    border: 1px solid #143823;
-    color: var(--color-primary);
-    font-size: 0.78rem;
+.btn-primary {
+    background-color: var(--color-primary);
+    color: #000000;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover);
+    color: #000000;
+}
+
+.btn-pill {
+    background-color: #ff3b20;
+    color: #ffffff;
+    border-radius: 9999px;
+    padding: 0.85rem 2.2rem;
+    font-size: 0.95rem;
     font-weight: 700;
+    text-transform: none;
+    letter-spacing: -0.01em;
+}
+
+.btn-pill:hover {
+    background-color: #e62c12;
+    color: #ffffff;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border-color: var(--border-card);
+    color: var(--text-white);
+}
+
+.btn-secondary:hover {
+    border-color: var(--text-white);
+    background-color: #121216;
+    color: var(--text-white);
+}
+
+.btn-sm {
+    padding: 0.45rem 1rem;
+    font-size: 0.75rem;
+}
+
+.btn-lg {
+    padding: 0.95rem 2.2rem;
+    font-size: 0.88rem;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* ========================================================
+   3. HERO SECTION WITH VIDEO / PHOTO BACKGROUND
+   ======================================================== */
+.hero-wix {
+    position: relative;
+    background-color: #000000;
+    min-height: 580px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    padding: 5rem 0;
+}
+
+/* Background Media Container */
+.hero-media-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-video,
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.38) contrast(1.15);
+    transform: scale(1.02);
+}
+
+/* Cinematic Dark Gradient Overlays */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.75) 50%, rgba(0, 0, 0, 0.4) 100%),
+                linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, transparent 40%, rgba(0, 0, 0, 0.95) 100%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 680px;
+}
+
+.hero-eyebrow-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    border-radius: 4px;
-    margin-bottom: 1.5rem;
+    color: var(--color-primary);
+    margin-bottom: 1.25rem;
+}
+
+.hero-video-toggle {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    background: rgba(18, 18, 22, 0.7);
+    border: 1px solid var(--border-card);
+    padding: 0.25rem 0.65rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s;
+}
+
+.hero-video-toggle:hover {
+    color: var(--text-white);
+    border-color: var(--text-muted);
 }
 
 .hero-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 3.5rem;
     font-weight: 800;
-    line-height: 1.12;
-    color: #ffffff;
-    letter-spacing: -0.035em;
-    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.35rem;
 }
 
 .hero-title span {
-    color: var(--color-primary);
+    color: var(--text-muted);
 }
 
 .hero-desc {
+    font-size: 0.98rem;
     color: var(--text-muted);
-    font-size: 1.15rem;
-    max-width: 680px;
-    margin-bottom: 2.5rem;
-    line-height: 1.8;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+    max-width: 580px;
 }
 
 .hero-actions {
     display: flex;
-    gap: 1rem;
-    align-items: center;
-    margin-bottom: 4rem;
-}
-
-/* Stats Ribbon (Ticket Fairy metrics bar) */
-.hero-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border: 1px solid var(--border-card);
-    background-color: var(--bg-card);
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.stat-box {
-    padding: 1.5rem;
-    border-right: 1px solid var(--border-color);
-}
-
-.stat-box:last-child {
-    border-right: none;
-}
-
-.stat-val {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.02em;
-}
-
-.stat-val span {
-    color: var(--color-primary);
-}
-
-.stat-lbl {
-    font-size: 0.8rem;
-    color: var(--text-sub);
-    font-weight: 600;
-    margin-top: 0.25rem;
+    flex-wrap: wrap;
+    gap: 0.85rem;
 }
 
 /* ========================================================
-   SECTIONS GENERAL
+   4. 4-PILLAR FEATURE BAR (Wix wh-1064 Minimalist Grid)
+   ======================================================== */
+.pillars-bar {
+    background-color: var(--bg-darker);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 2.25rem 0;
+}
+
+.pillars-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.pillar-col {
+    border-left: 2px solid #ff3b20;
+    padding-left: 1.25rem;
+    transition: opacity 0.2s ease;
+}
+
+.pillar-col-num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-primary);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.35rem;
+}
+
+.pillar-col-title {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-white);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.35rem;
+}
+
+.pillar-col-desc {
+    font-size: 0.8rem;
+    color: var(--text-sub);
+    line-height: 1.5;
+}
+
+/* ========================================================
+   5. SECTIONS & HEADINGS
    ======================================================== */
 .section {
-    padding: 85px 0;
-    border-bottom: 1px solid var(--border-color);
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .section-head {
-    margin-bottom: 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 2.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-.section-tag {
-    font-size: 0.8rem;
-    color: var(--color-primary);
-    font-weight: 700;
+.section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+    margin-bottom: 0.35rem;
 }
 
 .section-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 2.25rem;
+    font-size: 2.2rem;
     font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.025em;
-    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
 }
 
-.section-subtitle {
-    color: var(--text-muted);
-    font-size: 1rem;
-    max-width: 600px;
+.section-counter {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-sub);
 }
 
 /* ========================================================
-   TICKET CARDS (TICKET FAIRY EVENT PASS TIER STYLE)
+   6. SHOP BY CATEGORY (3 Box Wix Layout)
+   ======================================================== */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.category-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 240px;
+    transition: all 0.25s ease;
+}
+
+.category-card:hover {
+    border-color: var(--color-primary);
+    background-color: var(--bg-card-hover);
+    transform: translateY(-2px);
+}
+
+.category-card-code {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-primary);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.category-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+}
+
+.category-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+.category-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-white);
+    text-transform: uppercase;
+}
+
+.category-card-arrow {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+}
+
+.category-card:hover .category-card-arrow {
+    transform: translateX(4px);
+}
+
+/* ========================================================
+   7. THE ONE-STOP SECTION (4 Service Standard Grid)
+   ======================================================== */
+.standards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.standard-card {
+    background-color: var(--bg-black);
+    border: 1px solid var(--border-subtle);
+    padding: 1.75rem 1.5rem;
+}
+
+.standard-num {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 0.65rem;
+}
+
+.standard-title {
+    font-size: 0.98rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+    letter-spacing: 0.02em;
+}
+
+.standard-desc {
+    font-size: 0.82rem;
+    color: var(--text-sub);
+    line-height: 1.6;
+}
+
+/* ========================================================
+   8. PRODUCT / TICKET CARDS (Top Sellers Layout)
    ======================================================== */
 .cards-grid {
     display: grid;
@@ -245,293 +521,327 @@ body {
 
 .item-card {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: 8px;
-    padding: 2.25rem 2rem;
+    border: 1px solid var(--border-subtle);
     display: flex;
     flex-direction: column;
-    transition: background-color 0.15s, border-color 0.15s;
+    justify-content: space-between;
+    padding: 2rem;
+    transition: all 0.25s ease;
 }
 
 .item-card:hover {
-    background-color: var(--bg-card-hover);
-    border-color: #2f3342;
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
 }
 
 .item-card.highlight {
-    border-color: var(--color-primary);
-    background-color: #0f1619;
+    border-color: rgba(255, 80, 0, 0.6);
 }
 
-.card-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-badge {
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     color: var(--color-primary);
-    margin-bottom: 0.75rem;
+}
+
+.card-code {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-sub);
 }
 
 .card-name {
-    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1.35rem;
-    font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.75rem;
 }
 
 .card-summary {
+    font-size: 0.85rem;
     color: var(--text-muted);
-    font-size: 0.875rem;
-    margin-bottom: 1.75rem;
-    line-height: 1.6;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
 }
 
 .card-price-box {
-    margin-bottom: 1.75rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.price-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    color: var(--text-sub);
+    margin-bottom: 0.25rem;
 }
 
 .price-currency {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-right: 0.25rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-right: 0.2rem;
 }
 
 .price-number {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 800;
-    color: #ffffff;
+    color: var(--text-white);
+    line-height: 1;
 }
 
 .price-unit {
-    font-size: 0.85rem;
-    color: var(--text-sub);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: 0.25rem;
 }
 
 .card-features-list {
     list-style: none;
     margin-bottom: 2rem;
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .card-features-list li {
-    font-size: 0.875rem;
-    color: var(--text-main);
-    padding: 0.45rem 0;
-    border-bottom: 1px solid #161821;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.card-features-list li::before {
+    content: "—";
+    color: var(--color-primary);
+    font-weight: bold;
 }
 
 /* ========================================================
-   WORKFLOW STEPS (TICKET FAIRY SOLUTION ARCHITECTURE)
+   9. STEPS ROW (Alur Pengajuan Sekolah)
    ======================================================== */
 .steps-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.25rem;
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
 }
 
 .step-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: 6px;
-    padding: 1.75rem;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 1.5rem;
+    border-top: 2px solid var(--border-card);
+    transition: border-top-color 0.2s ease;
+}
+
+.step-card:hover {
+    border-top-color: var(--color-primary);
 }
 
 .step-num {
-    font-size: 0.8rem;
-    font-weight: 800;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
     color: var(--color-primary);
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
 .step-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.05rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--text-white);
+    text-transform: uppercase;
     margin-bottom: 0.5rem;
 }
 
 .step-text {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.6;
+    font-size: 0.78rem;
+    color: var(--text-sub);
+    line-height: 1.55;
 }
 
 /* ========================================================
-   INFO SECTION
+   10. BANNER SECTION (Join Club / Reservasi)
    ======================================================== */
-.info-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-}
-
-.info-item {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: 6px;
-    padding: 1.75rem;
-}
-
-.info-item h4 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-
-.info-item p {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-
-/* ========================================================
-   BUTTONS
-   ======================================================== */
-.btn {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-    font-weight: 700;
-    font-family: inherit;
-    border-radius: 4px;
-    border: 1px solid transparent;
-    cursor: pointer;
+.cta-banner {
+    background-color: var(--bg-darker);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 5rem 0;
     text-align: center;
-    text-decoration: none;
-    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
 }
 
-.btn-primary {
-    background-color: var(--color-primary);
-    color: var(--color-primary-text);
-    border-color: var(--color-primary);
+.cta-banner-content {
+    max-width: 650px;
+    margin: 0 auto;
 }
 
-.btn-primary:hover {
-    background-color: var(--color-primary-hover);
-    border-color: var(--color-primary-hover);
-    color: #000000;
+.cta-banner-content h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
 }
 
-.btn-secondary {
-    background-color: var(--color-secondary);
-    color: #ffffff;
-    border-color: var(--border-card);
+.cta-banner-content p {
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.65;
 }
 
-.btn-secondary:hover {
-    background-color: var(--color-secondary-hover);
-    border-color: var(--text-sub);
-    color: #ffffff;
-}
-
-.btn-block {
-    display: block;
-    width: 100%;
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 /* ========================================================
-   FOOTER (TICKET FAIRY FOOTER STYLE)
+   11. MULTI-COLUMN FOOTER
    ======================================================== */
 .footer {
-    background-color: #030304;
-    border-top: 1px solid var(--border-color);
-    padding: 4rem 0 2rem;
+    background-color: #000000;
+    color: var(--text-sub);
+    padding: 4.5rem 0 2.5rem 0;
+    font-size: 0.82rem;
 }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
     gap: 3rem;
-    margin-bottom: 3rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .footer-brand h4 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
     font-weight: 800;
-    color: #ffffff;
-    margin-bottom: 0.75rem;
-    font-size: 1.1rem;
-    letter-spacing: -0.02em;
+    color: var(--text-white);
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+    letter-spacing: 0.05em;
 }
 
 .footer-brand p {
-    color: var(--text-sub);
-    font-size: 0.875rem;
-    max-width: 350px;
-    line-height: 1.7;
+    color: var(--text-muted);
+    line-height: 1.65;
+    font-size: 0.82rem;
+    max-width: 320px;
 }
 
 .footer-col h5 {
-    color: var(--text-muted);
-    font-size: 0.8rem;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
     font-weight: 700;
+    color: var(--text-white);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 1rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.25rem;
 }
 
 .footer-col ul {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
 }
 
-.footer-col li {
-    margin-bottom: 0.5rem;
+.footer-col ul li a {
+    color: var(--text-muted);
+    font-size: 0.82rem;
 }
 
-.footer-col a {
-    color: var(--text-sub);
-    font-size: 0.875rem;
-    text-decoration: none;
-    transition: color 0.15s;
+.footer-col ul li a:hover {
+    color: var(--text-white);
 }
 
-.footer-col a:hover {
-    color: var(--color-primary);
+.footer-pay-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+}
+
+.pay-badge {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    padding: 0.2rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
 }
 
 .footer-bottom {
-    border-top: 1px solid var(--border-color);
-    padding-top: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.82rem;
+    padding-top: 2rem;
+    font-size: 0.75rem;
     color: var(--text-sub);
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-@media (max-width: 900px) {
-    .cards-grid, .steps-row, .info-row, .hero-stats {
-        grid-template-columns: 1fr 1fr;
+/* ========================================================
+   RESPONSIVE DESIGN
+   ======================================================== */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    .pillars-grid-4,
+    .standards-grid,
+    .steps-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
     }
 }
 
-@media (max-width: 600px) {
-    .cards-grid, .steps-row, .info-row, .footer-grid, .hero-stats {
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+    .category-grid,
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .pillars-grid-4,
+    .standards-grid,
+    .steps-row {
         grid-template-columns: 1fr;
     }
     .hero-title {
-        font-size: 2.25rem;
+        font-size: 2.2rem;
     }
-    .stat-box {
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
-    .stat-box:last-child {
-        border-bottom: none;
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }

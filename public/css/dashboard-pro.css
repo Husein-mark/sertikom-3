@@ -1,0 +1,614 @@
+/* ========================================================
+   THE NICE PARK RUMPIN - HIGH-TECH PRO DASHBOARD
+   Matching User Screenshot Layout:
+   - Compact icon sidebar
+   - Top breadcrumb & pill switcher
+   - Big overview balance card (with theme accent glow, NO white corner cards)
+   - Recent activity dark table
+   - Right-side widgets with progress bars and mini-chart bars
+   - Color theme: Pitch Black (#000000, #06070a), Dark Surface (#0d0e14), Accent (#ff3b20)
+   ======================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@600;700;800;900&family=Wix+Madefor+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+    --d-bg: #06070a;
+    --d-sidebar: #0a0b10;
+    --d-surface: #0e0f15;
+    --d-surface-hover: #15161f;
+    --d-border: rgba(255, 255, 255, 0.08);
+    --d-border-light: rgba(255, 255, 255, 0.14);
+
+    --d-primary: #ff3b20;
+    --d-primary-hover: #e62c12;
+    --d-primary-glow: rgba(255, 59, 32, 0.25);
+
+    --d-text: #ffffff;
+    --d-muted: #8d8e9c;
+    --d-sub: #555663;
+
+    --d-success: #10b981;
+    --d-warning: #f59e0b;
+    --d-danger: #ef4444;
+    --d-info: #38bdf8;
+}
+
+body.dashboard-pro-body {
+    background-color: var(--d-bg);
+    color: var(--d-text);
+    font-family: 'Wix Madefor Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.dash-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--d-bg);
+}
+
+/* ========================================================
+   COMPACT ICON SIDEBAR
+   ======================================================== */
+.dash-sidebar {
+    width: 76px;
+    background-color: var(--d-sidebar);
+    border-right: 1px solid var(--d-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    z-index: 50;
+    flex-shrink: 0;
+}
+
+.dash-brand-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #ff3b20 0%, #ba200b 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(255, 59, 32, 0.35);
+    margin-bottom: 2rem;
+    text-decoration: none;
+}
+
+.dash-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+    flex: 1;
+}
+
+.dash-nav-item {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--d-muted);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.dash-nav-item:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.dash-nav-item.active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dash-nav-item.active::after {
+    content: '';
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    border-radius: 4px 0 0 4px;
+    background-color: var(--d-primary);
+}
+
+.dash-sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    align-items: center;
+}
+
+/* ========================================================
+   MAIN CONTENT WRAPPER
+   ======================================================== */
+.dash-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* ========================================================
+   TOPBAR
+   ======================================================== */
+.dash-topbar {
+    height: 64px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--d-border);
+    background-color: rgba(10, 11, 16, 0.75);
+    backdrop-filter: blur(14px);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+}
+
+.dash-breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.dash-breadcrumbs .crumb-muted {
+    color: var(--d-muted);
+}
+
+.dash-breadcrumbs .crumb-sep {
+    color: var(--d-sub);
+}
+
+.dash-breadcrumbs .crumb-active {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.dash-filter-pills {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--d-border);
+    padding: 0.25rem;
+    border-radius: 9999px;
+}
+
+.dash-pill {
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--d-muted);
+    text-decoration: none;
+    border-radius: 9999px;
+    transition: all 0.2s;
+}
+
+.dash-pill:hover {
+    color: #ffffff;
+}
+
+.dash-pill.active {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dash-user-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.dash-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2a2b38 0%, #15161f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #ffffff;
+}
+
+.dash-user-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* ========================================================
+   DASHBOARD BODY (2 COLUMNS)
+   ======================================================== */
+.dash-body {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.5rem;
+    max-width: 1500px;
+}
+
+/* ========================================================
+   HERO OVERVIEW CARD (Matching Screenshot, NO White Corner Cards)
+   ======================================================== */
+.hero-overview-card {
+    background: radial-gradient(ellipse at top left, rgba(255, 59, 32, 0.22) 0%, rgba(20, 21, 30, 0.98) 65%), #0c0d13;
+    border: 1px solid var(--d-border-light);
+    border-radius: 20px;
+    padding: 2.25rem 2.25rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtle background accent glow */
+.hero-overview-card::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255, 59, 32, 0.18) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero-overview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.hero-overview-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--d-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.hero-currency-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+}
+
+.hero-overview-value {
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+    margin: 0.5rem 0 1.5rem 0;
+}
+
+.hero-overview-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.dash-btn-primary {
+    background-color: var(--d-primary);
+    color: #ffffff;
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.7rem 1.6rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 59, 32, 0.3);
+}
+
+.dash-btn-primary:hover {
+    background-color: var(--d-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 59, 32, 0.4);
+}
+
+.dash-btn-ghost {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.7rem 1.4rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.2s;
+}
+
+.dash-btn-ghost:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ========================================================
+   RECENT ACTIVITY TABLE CARD
+   ======================================================== */
+.activity-card {
+    background-color: var(--d-surface);
+    border: 1px solid var(--d-border);
+    border-radius: 20px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.activity-title {
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.dash-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.dash-table th {
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--d-sub);
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid var(--d-border);
+    letter-spacing: 0.05em;
+}
+
+.dash-table td {
+    padding: 0.95rem 0.85rem;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+.dash-table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.status-badge.paid {
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-badge.unpaid {
+    background: rgba(245, 158, 11, 0.12);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-badge.pending {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.status-badge.rejected {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* ========================================================
+   UPCOMING STRIP (Bottom Left)
+   ======================================================== */
+.upcoming-strip {
+    background-color: var(--d-surface);
+    border: 1px solid var(--d-border);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.upcoming-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.upcoming-label {
+    font-size: 0.72rem;
+    color: var(--d-sub);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.upcoming-val {
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* ========================================================
+   RIGHT COLUMN WIDGETS
+   ======================================================== */
+.dash-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.dash-widget {
+    background-color: var(--d-surface);
+    border: 1px solid var(--d-border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.dash-widget-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--d-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+}
+
+.dash-widget-val {
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.85rem;
+}
+
+/* Segmented progress bar (like screenshot) */
+.dash-segments-bar {
+    display: flex;
+    gap: 4px;
+    margin-top: 0.75rem;
+}
+
+.dash-segment {
+    flex: 1;
+    height: 7px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+}
+
+.dash-segment.fill {
+    background-color: #ff3b20;
+    box-shadow: 0 0 8px rgba(255, 59, 32, 0.4);
+}
+
+/* Equalizer mini chart bars (like screenshot) */
+.dash-chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 48px;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+}
+
+.dash-bar {
+    flex: 1;
+    background: linear-gradient(180deg, #ff3b20 0%, #3a0d07 100%);
+    border-radius: 2px 2px 0 0;
+    transition: height 0.3s;
+}
+
+/* AI Assistant / Info Card at bottom right */
+.dash-info-card {
+    background: radial-gradient(circle at top right, rgba(255, 59, 32, 0.15) 0%, rgba(14, 15, 21, 0.95) 75%), #0e0f15;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+    padding: 1.5rem;
+}
+
+.dash-info-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--d-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.dash-info-title {
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.dash-info-text {
+    font-size: 0.8rem;
+    color: var(--d-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .dash-body {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .dash-sidebar {
+        display: none;
+    }
+    .dash-body {
+        padding: 1rem;
+    }
+    .hero-overview-value {
+        font-size: 2.2rem;
+    }
+}

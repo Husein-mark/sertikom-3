@@ -14,7 +14,8 @@ class MidtransService
 {
     public function __construct()
     {
-        Config::$serverKey = config('midtrans.server_key');
+        Config::$serverKey = config('midtrans.server_key') ?: env('MIDTRANS_SERVER_KEY', env('KEY_MIDTRANS_SERVER_KEY'));
+        Config::$clientKey = config('midtrans.client_key') ?: env('MIDTRANS_CLIENT_KEY', env('KEY_MIDTRANS_CLIENT_KEY'));
         Config::$isProduction = config('midtrans.is_production', false);
         Config::$isSanitized = config('midtrans.is_sanitized', true);
         Config::$is3ds = config('midtrans.is_3ds', true);
@@ -25,9 +26,9 @@ class MidtransService
      */
     public function getSnapToken(Order $order): string
     {
-        // Cek jika payment sudah ada snap_token
+        // Cek jika payment sudah ada snap_token yang valid (bukan DEMO-SNAP dummy)
         $existingPayment = $order->latestPayment;
-        if ($existingPayment && $existingPayment->snap_token && $existingPayment->transaction_status === 'pending') {
+        if ($existingPayment && $existingPayment->snap_token && $existingPayment->transaction_status === 'pending' && !Str::startsWith($existingPayment->snap_token, 'DEMO-SNAP')) {
             return $existingPayment->snap_token;
         }
 
@@ -37,30 +38,34 @@ class MidtransService
                 'gross_amount' => (int) $order->total_price,
             ],
             'customer_details' => [
-                'first_name' => $order->customer_name,
-                'email' => $order->customer_email,
-                'phone' => $order->customer_phone,
+                'first_name' => $order->customer_name ?: ($order->user->name ?? 'Pengunjung'),
+                'email' => $order->customer_email ?: ($order->user->email ?? 'pengunjung@example.com'),
+                'phone' => $order->customer_phone ?: ($order->user->phone ?? '081234567890'),
             ],
             'item_details' => [
                 [
                     'id' => $order->type === 'general' ? 'TKT-' . $order->ticket_id : 'PKG-' . $order->package_id,
                     'price' => (int) $order->unit_price,
                     'quantity' => (int) $order->quantity,
-                    'name' => $order->type === 'general' 
+                    'name' => mb_substr($order->type === 'general' 
                         ? ($order->ticket ? $order->ticket->name : 'Tiket Wisata')
-                        : ($order->package ? $order->package->name : 'Paket Sekolah'),
+                        : ($order->package ? $order->package->name : 'Paket Sekolah'), 0, 50),
                 ]
             ],
-            // 1 metode pembayaran tunggal (Single payment method: QRIS)
-            'enabled_payments' => config('midtrans.enabled_payments', ['qris']),
         ];
 
         try {
-            $snapToken = Snap::getSnapToken($params);
-        } catch (\Exception $e) {
-            // Fallback token untuk development/testing jika server key sandbox belum terisi kredensial live
-            $snapToken = 'DEMO-SNAP-' . strtoupper(Str::random(24));
-        }
+                $snapToken = Snap::getSnapToken($params);
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error(
+                    'Midtrans Snap Error: ' . $e->getMessage(),
+                    [
+                        'order_id' => $order->order_number,
+                    ]
+                );
+
+                throw $e;
+            }
 
         // Catat atau perbarui record payment
         Payment::updateOrCreate(
@@ -73,6 +78,38 @@ class MidtransService
         );
 
         return $snapToken;
+    }
+
+    /**
+     * Memeriksa status transaksi secara real-time langsung ke server Midtrans
+     */
+    public function checkTransactionStatus(Order $order): ?object
+    {
+        try {
+            $status = \Midtrans\Transaction::status($order->order_number);
+            if (is_array($status)) {
+                $status = (object) $status;
+            }
+            $transactionStatus = $status->transaction_status ?? null;
+            $fraudStatus = $status->fraud_status ?? null;
+            $paymentType = $status->payment_type ?? 'midtrans';
+            $transactionId = $status->transaction_id ?? null;
+
+            if ($transactionStatus === 'capture') {
+                if ($fraudStatus === 'accept') {
+                    $this->handlePaymentSuccess($order, $paymentType, $transactionId);
+                }
+            } elseif ($transactionStatus === 'settlement') {
+                $this->handlePaymentSuccess($order, $paymentType, $transactionId);
+            } elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
+                $order->update(['status' => 'cancelled']);
+            }
+
+            return $status;
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::warning('Midtrans check status exception: ' . $e->getMessage());
+            return null;
+        }
     }
 
     /**

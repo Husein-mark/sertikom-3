@@ -1,43 +1,46 @@
 /* ========================================================
-   THE NICE PARK RUMPIN - TICKET FAIRY STYLE (FLAT DARK)
-   Inspired by Ticket Fairy Esports & Gaming Solutions:
-   - Deep Black / Dark Slate Palette (#08080a / #101116)
-   - High-Contrast Electric Action Green (#00e676 / #00c853)
-   - 100% Solid Flat Colors (NO GRADIENTS)
-   - Crisp Professional Typography (Plus Jakarta Sans & Inter)
-   - Zero Cheesy Icons, Clean Minimalist UI
+   THE NICE PARK RUMPIN - OFFICIAL TICKETING SYSTEM
+   Precision Wix wh-1064 Dark Design System:
+   - Official Wix Typography: Wix Madefor Display & Wix Madefor Text
+   - Minimalist Dark Architecture: Pitch Black (#000000), Deep Gray (#08080a, #0d0d10)
+   - High-Contrast Accent Red/Orange: #ff3b20 (Hover: #e62c12)
+   - Clean 1px Precision Borders (#1a1a1f, #202026)
    ======================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@500;600;700;800;900&family=Wix+Madefor+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
 
 :root {
-    --bg-main: #08080a;
-    --bg-card: #101116;
-    --bg-card-hover: #15161d;
-    --bg-card-active: #171822;
-    --bg-input: #0a0b0e;
-    --bg-nav: #08080a;
+    --bg-main: #000000;
+    --bg-card: #0d0d10;
+    --bg-card-hover: #141418;
+    --bg-card-active: #1a1a20;
+    --bg-input: #08080a;
+    --bg-nav: rgba(10, 11, 15, 0.9);
 
-    --border-color: #1e2029;
-    --border-card: #242633;
-    --border-focus: #00e676;
+    --border-color: #1a1a1f;
+    --border-card: #202026;
+    --border-focus: #ff3b20;
 
-    /* High-contrast solid flat accent like Ticket Fairy */
-    --color-primary: #00e676;
-    --color-primary-hover: #00c853;
-    --color-primary-text: #040806;
+    /* Wix wh-1064 Accent */
+    --color-primary: #ff3b20;
+    --color-primary-hover: #e62c12;
+    --color-primary-text: #ffffff;
 
-    --color-secondary: #242633;
-    --color-secondary-hover: #2e3142;
+    --color-secondary: #16161c;
+    --color-secondary-hover: #222228;
 
-    --color-success: #00e676;
+    --color-success: #10b981;
     --color-warning: #f59e0b;
     --color-danger: #ef4444;
     --color-info: #38bdf8;
 
-    --text-main: #ffffff;
-    --text-muted: #9a9ba8;
-    --text-sub: #636473;
+    --text-main: #e2e2e5;
+    --text-muted: #8d8d96;
+    --text-sub: #5c5c66;
+
+    --font-display: 'Wix Madefor Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-text: 'Wix Madefor Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 
     --radius-sm: 4px;
     --radius-md: 6px;
@@ -57,14 +60,14 @@ html {
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
-    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-text);
     line-height: 1.6;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6, .font-tech {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
     letter-spacing: -0.025em;
     color: #ffffff;
@@ -77,7 +80,7 @@ a {
 }
 
 a:hover {
-    color: #69f0ae;
+    color: var(--color-primary-hover);
 }
 
 /* ========================================================
@@ -114,7 +117,7 @@ a:hover {
 }
 
 /* ========================================================
-   NAVBAR (TICKET FAIRY MINIMAL DARK)
+   NAVBAR (WIX WH-1064 MINIMAL CLEAN THEME)
    ======================================================== */
 .navbar {
     position: fixed;
@@ -122,7 +125,9 @@ a:hover {
     left: 0;
     right: 0;
     height: 72px;
-    background-color: #050507;
+    background-color: var(--bg-nav);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
 }
@@ -135,16 +140,12 @@ a:hover {
 }
 
 .brand-logo {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.15rem;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
     font-weight: 800;
     color: #ffffff;
-    letter-spacing: -0.03em;
-    text-transform: uppercase;
-}
-
-.brand-logo span {
-    color: var(--color-primary);
+    letter-spacing: -0.02em;
+    text-transform: lowercase;
 }
 
 .nav-menu {
@@ -152,17 +153,40 @@ a:hover {
     list-style: none;
     gap: 2rem;
     align-items: center;
+    margin-left: auto;
 }
 
 .nav-menu a {
     color: var(--text-muted);
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.88rem;
+    font-weight: 500;
     transition: color 0.15s;
 }
 
 .nav-menu a:hover, .nav-menu a.active {
     color: #ffffff;
+}
+
+.nav-logout-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s;
+}
+
+.nav-logout-btn:hover {
+    color: #ffffff;
+}
+
+.user-greeting {
+    font-size: 0.88rem;
+    color: #ffffff;
+    font-weight: 600;
 }
 
 .nav-actions {
@@ -172,32 +196,38 @@ a:hover {
 }
 
 /* ========================================================
-   BUTTONS (FLAT SOLID TICKET FAIRY STYLE - NO GRADIENTS)
+   BUTTONS (WIX WH-1064 ACCENT & PILL STYLING)
    ======================================================== */
 .btn {
     display: inline-block;
     padding: 0.65rem 1.35rem;
     font-size: 0.875rem;
     font-weight: 700;
-    font-family: inherit;
+    font-family: var(--font-display);
     border-radius: var(--radius-sm);
     border: 1px solid transparent;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
-    transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+    transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
 }
 
 .btn-primary {
     background-color: var(--color-primary);
-    color: var(--color-primary-text);
+    color: #ffffff;
     border-color: var(--color-primary);
 }
 
 .btn-primary:hover {
     background-color: var(--color-primary-hover);
     border-color: var(--color-primary-hover);
-    color: #000000;
+    color: #ffffff;
+}
+
+.btn-pill {
+    border-radius: 9999px;
+    padding: 0.75rem 1.85rem;
+    font-size: 0.9rem;
 }
 
 .btn-secondary {
@@ -208,7 +238,7 @@ a:hover {
 
 .btn-secondary:hover {
     background-color: var(--color-secondary-hover);
-    border-color: var(--text-sub);
+    border-color: #555560;
     color: #ffffff;
 }
 

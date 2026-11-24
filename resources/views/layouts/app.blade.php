@@ -9,32 +9,32 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR (WIX WH-1064 MINIMAL CLEAN THEME) -->
     <nav class="navbar">
         <div class="container nav-container">
-            <a href="{{ url('/') }}" class="brand-logo">NICEPARK <span>RUMPIN</span></a>
+            <a href="{{ url('/') }}" class="brand-logo">the nice park</a>
+
             <ul class="nav-menu">
                 <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Beranda</a></li>
-                <li><a href="{{ route('tickets.index') }}" class="{{ request()->is('tickets*') ? 'active' : '' }}">Tiket Wisata</a></li>
+                <li><a href="{{ route('tickets.index') }}" class="{{ request()->is('tickets*') ? 'active' : '' }}">Katalog Tiket</a></li>
                 <li><a href="{{ route('school.index') }}" class="{{ request()->is('school*') ? 'active' : '' }}">Paket Sekolah</a></li>
                 <li><a href="{{ route('orders.history') }}" class="{{ request()->is('orders*') ? 'active' : '' }}">Pesanan Saya</a></li>
-            </ul>
-            <div class="nav-actions">
                 @auth
                     @if(Auth::user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}" class="btn btn-outline btn-sm">Portal Admin</a>
-                    @else
-                        <span style="font-size: 0.85rem; color: var(--text-muted); margin-right: 0.5rem;">Halo, <strong>{{ Auth::user()->name }}</strong></span>
+                        <li><a href="{{ route('admin.dashboard') }}">Portal Admin</a></li>
                     @endif
-                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-secondary btn-sm">Keluar</button>
-                    </form>
+                    <li><span class="user-greeting">{{ Auth::user()->name }}</span></li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="nav-logout-btn">Keluar</button>
+                        </form>
+                    </li>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-secondary btn-sm">Masuk</a>
-                    <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Daftar</a>
+                    <li><a href="{{ route('login') }}">Log In</a></li>
+                    <li><a href="{{ route('register') }}">Daftar</a></li>
                 @endauth
-            </div>
+            </ul>
         </div>
     </nav>
 

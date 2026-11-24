@@ -6,6 +6,4 @@ return [
     'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
     'is_sanitized' => env('MIDTRANS_IS_SANITIZED', true),
     'is_3ds' => env('MIDTRANS_IS_3DS', true),
-    // 1 Single Payment Method ONLY (e.g. 'qris')
-    'enabled_payments' => array_filter(explode(',', env('MIDTRANS_ENABLED_PAYMENTS', 'qris'))),
 ];

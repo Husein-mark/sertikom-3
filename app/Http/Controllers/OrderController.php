@@ -149,4 +149,52 @@ class OrderController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Notification processed successfully']);
     }
+
+    /**
+     * Finish Redirect Handler dari Midtrans Snap (Jika Midtrans mengarahkan browser pelanggan ke Finish URL)
+     */
+    public function handleMidtransFinish(Request $request)
+    {
+        $orderNumber = $request->query('order_id') ?? $request->input('order_id');
+        if ($orderNumber) {
+            $order = Order::where('order_number', $orderNumber)->first();
+            if ($order) {
+                // Periksa status ke Midtrans secara langsung
+                $this->midtransService->checkTransactionStatus($order);
+                $order->refresh();
+
+                if ($order->isPaid()) {
+                    return redirect()->route('orders.eticket', $order->id)->with('success', 'Pembayaran berhasil diverifikasi! E-ticket resmi telah diterbitkan.');
+                }
+
+                $statusCode = $request->query('status_code') ?? $request->input('status_code');
+                $transactionStatus = $request->query('transaction_status') ?? $request->input('transaction_status');
+
+                if ($statusCode == '200' || in_array($transactionStatus, ['settlement', 'capture'])) {
+                    $this->midtransService->handlePaymentSuccess($order, 'midtrans');
+                    return redirect()->route('orders.eticket', $order->id)->with('success', 'Pembayaran berhasil diverifikasi! E-ticket resmi telah diterbitkan.');
+                }
+
+                return redirect()->route('orders.checkout', $order->id)->with('error', 'Status transaksi saat ini: ' . ($transactionStatus ?: 'menunggu konfirmasi pembayaran'));
+            }
+        }
+
+        return redirect()->route('orders.history')->with('success', 'Sesi pembayaran selesai.');
+    }
+
+    /**
+     * Sinkronisasi Status Transaksi Langsung ke Server Midtrans
+     */
+    public function checkStatus($id)
+    {
+        $order = Order::findOrFail($id);
+        $this->midtransService->checkTransactionStatus($order);
+        $order->refresh();
+
+        if ($order->isPaid()) {
+            return redirect()->route('orders.eticket', $order->id)->with('success', 'Pembayaran terkonfirmasi lunas di server Midtrans! E-ticket resmi telah terbit.');
+        }
+
+        return redirect()->route('orders.checkout', $order->id)->with('error', 'Pembayaran belum terdeteksi lunas pada sistem Midtrans. Jika sudah membayar via QRIS/VA sandbox, silakan klik tombol Cek Status kembali.');
+    }
 }
