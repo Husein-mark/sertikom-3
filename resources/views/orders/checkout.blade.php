@@ -1,270 +1,766 @@
+
 @extends('layouts.app')
 
 @section('title', 'Selesaikan Pembayaran - The Nice Park Rumpin')
 
+@push('styles')
+<style>
+
+
+    .checkout-page {
+        width: 100%;
+    }
+
+    .checkout-page .checkout-stepper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 18px;
+        margin-bottom: 28px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-md);
+        overflow-x: auto;
+    }
+
+    .checkout-page .step-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+    }
+
+    .checkout-page .step-number {
+        width: 25px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: var(--bg-card-active);
+        color: var(--text-muted);
+    }
+
+    .checkout-page .step-item.active {
+        color: var(--color-primary);
+    }
+
+    .checkout-page .step-item.active .step-number {
+        background: var(--color-primary);
+        color: var(--color-primary-text);
+    }
+
+    .checkout-page .step-line {
+        height: 1px;
+        flex: 1;
+        min-width: 15px;
+        background: var(--border-color);
+    }
+
+    .checkout-page .checkout-heading {
+        margin-bottom: 24px;
+    }
+
+    .checkout-page .checkout-heading h1 {
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+        margin-bottom: 5px;
+    }
+
+    .checkout-page .checkout-heading p {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    .checkout-page .checkout-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+        gap: 22px;
+        align-items: start;
+    }
+
+    .checkout-page .checkout-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-md);
+        padding: 20px;
+    }
+
+    .checkout-page .checkout-card + .checkout-card {
+        margin-top: 16px;
+    }
+
+    .checkout-page .checkout-card-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .checkout-page .checkout-card-heading h3 {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .checkout-page .checkout-label {
+        color: var(--text-muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 5px;
+    }
+
+    .checkout-page .checkout-value {
+        color: var(--text-main);
+        font-size: 0.87rem;
+        font-weight: 600;
+    }
+
+    .checkout-page .checkout-info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .checkout-page .checkout-info-row:last-child {
+        border-bottom: none;
+    }
+
+    .checkout-page .checkout-info-row > :last-child {
+        text-align: right;
+    }
+
+    .checkout-page .checkout-summary {
+        position: sticky;
+        top: 90px;
+    }
+
+    .checkout-page .checkout-total {
+        padding: 20px 0;
+        margin: 15px 0;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .checkout-page .checkout-total-amount {
+        font-family: var(--font-display);
+        font-size: clamp(1.6rem, 3vw, 2rem);
+        font-weight: 800;
+        color: var(--color-primary);
+        letter-spacing: -0.03em;
+        margin-top: 5px;
+    }
+
+    .checkout-page .payment-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 12px;
+    }
+
+    .checkout-page .payment-badges span {
+        background: var(--bg-input);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-sm);
+        color: var(--text-main);
+        padding: 6px 10px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .checkout-page .checkout-pay-button {
+        width: 100%;
+        margin-top: 12px;
+        padding: 14px;
+        font-weight: 800;
+        font-family: inherit;
+        font-size: 0.88rem;
+    }
+
+    .checkout-page .checkout-secondary-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+        font-size: 0.8rem;
+    }
+
+    .checkout-page .checkout-note {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        line-height: 1.7;
+        margin-top: 15px;
+    }
+
+    .checkout-page .checkout-contact {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    /* =========================================
+       MIDTRANS RIGHT SIDE PANEL
+    ========================================= */
+
+    .checkout-page .midtrans-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.72);
+        z-index: 9998;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .checkout-page .midtrans-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .checkout-page .midtrans-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(480px, 100%);
+        height: 100dvh;
+        background: var(--bg-card);
+        border-left: 1px solid var(--border-card);
+        z-index: 9999;
+        transform: translateX(100%);
+        transition: transform 0.35s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkout-page .midtrans-drawer.active {
+        transform: translateX(0);
+    }
+
+    .checkout-page .midtrans-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--border-color);
+        flex-shrink: 0;
+    }
+
+    .checkout-page .midtrans-header h3 {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    .checkout-page .midtrans-header p {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 3px;
+    }
+
+    .checkout-page .midtrans-close {
+        background: var(--bg-input);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        border-radius: var(--radius-sm);
+        padding: 7px 12px;
+        font-family: inherit;
+        font-size: 0.78rem;
+        cursor: pointer;
+    }
+
+    .checkout-page .midtrans-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 12px;
+    }
+
+    .checkout-page #snap-container {
+        width: 100%;
+        min-height: 550px;
+    }
+
+    @media (max-width: 768px) {
+        .checkout-page .checkout-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .checkout-page .checkout-summary {
+            position: static;
+        }
+
+        .checkout-page .checkout-contact {
+            grid-template-columns: 1fr;
+        }
+
+        .checkout-page .checkout-stepper {
+            justify-content: flex-start;
+        }
+
+        .checkout-page .step-line {
+            min-width: 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .checkout-page .checkout-card {
+            padding: 15px;
+        }
+
+        .checkout-page .checkout-info-row {
+            gap: 8px;
+            font-size: 0.78rem;
+        }
+
+        .checkout-page .checkout-info-row .checkout-value {
+            font-size: 0.78rem;
+        }
+    }
+</style>
+@endpush
+
 @section('content')
-<!-- PROGRESS STEPPER -->
-<div style="background-color: #10141f; border: 1px solid #1f273b; border-radius: 6px; padding: 1rem 1.5rem; margin-bottom: 2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">
-        <div style="color: var(--text-muted);">
-            <span style="display: inline-block; background-color: #1c2336; color: #94a3b8; width: 22px; height: 22px; text-align: center; line-height: 22px; border-radius: 3px; margin-right: 0.4rem;">1</span>
+
+<div class="checkout-page">
+
+    <!-- PROGRESS -->
+    <div class="checkout-stepper">
+        <div class="step-item">
+            <span class="step-number">1</span>
             Pilih Tiket
         </div>
-        <div style="color: #2e3852;">---------</div>
-        <div style="color: var(--text-muted);">
-            <span style="display: inline-block; background-color: #1c2336; color: #94a3b8; width: 22px; height: 22px; text-align: center; line-height: 22px; border-radius: 3px; margin-right: 0.4rem;">2</span>
+
+        <div class="step-line"></div>
+
+        <div class="step-item">
+            <span class="step-number">2</span>
             Data Pemesan
         </div>
-        <div style="color: #2e3852;">---------</div>
-        <div style="color: var(--color-primary);">
-            <span style="display: inline-block; background-color: var(--color-primary); color: #000000; width: 22px; height: 22px; text-align: center; line-height: 22px; border-radius: 3px; margin-right: 0.4rem; font-weight: 800;">3</span>
-            Pembayaran Midtrans (Aktif)
-        </div>
-        <div style="color: #2e3852;">---------</div>
-        <div style="color: var(--text-sub);">
-            <span style="display: inline-block; background-color: #151a27; color: var(--text-sub); width: 22px; height: 22px; text-align: center; line-height: 22px; border-radius: 3px; margin-right: 0.4rem;">4</span>
-            E-Ticket Terbit
-        </div>
-    </div>
-</div>
 
-<div class="page-header" style="margin-bottom: 1.75rem;">
-    <div>
-        <div style="font-size: 0.75rem; color: var(--color-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.35rem;">
-            GERBANG PEMBAYARAN RESMI #{{ $order->order_number }}
-        </div>
-        <h1 class="page-title">Selesaikan Pembayaran Reservasi</h1>
-        <p class="page-subtitle">Silakan selesaikan transaksi menggunakan Midtrans Payment Gateway untuk menerbitkan E-Ticket resmi.</p>
-    </div>
-    <div>
-        <a href="{{ route('orders.history') }}" class="btn btn-secondary btn-sm">Kembali ke Riwayat</a>
-    </div>
-</div>
+        <div class="step-line"></div>
 
-<div class="grid-2">
-    <!-- KOLOM KIRI: RINCIAN LENGKAP PESANAN -->
-    <div>
-        <!-- KARTU TIKET -->
-        <div class="card" style="margin-bottom: 1.5rem; border-top: 3px solid var(--color-primary);">
-            <div class="card-header">
-                <div>
-                    <div style="font-size: 0.72rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.05em;">Ringkasan Item</div>
-                    <div class="card-title" style="margin-top: 0.2rem;">
-                        {{ $order->isGeneral() ? ($order->ticket->name ?? 'Tiket Masuk Wisata') : ($order->package->name ?? 'Paket Kunjungan Sekolah') }}
-                    </div>
-                </div>
-                @if($order->status === 'paid')
-                    <span class="badge badge-paid">Lunas Terverifikasi</span>
-                @elseif($order->status === 'approved')
-                    <span class="badge badge-approved">Disetujui Admin - Siap Bayar</span>
-                @else
-                    <span class="badge badge-pending">Menunggu Pembayaran</span>
-                @endif
-            </div>
-
-            <!-- Tabel Spesifikasi Tagihan -->
-            <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1.25rem;">
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.75rem 0; color: var(--text-muted);">Nomor Registrasi Pesanan</td>
-                    <td style="padding: 0.75rem 0; text-align: right; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: #ffffff;">
-                        {{ $order->order_number }}
-                    </td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.75rem 0; color: var(--text-muted);">Kategori Kunjungan</td>
-                    <td style="padding: 0.75rem 0; text-align: right; color: #ffffff; font-weight: 600;">
-                        {{ $order->isGeneral() ? 'Pengunjung Umum / Mandiri' : 'Rombongan Edukasi Sekolah' }}
-                    </td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.75rem 0; color: var(--text-muted);">Tanggal Rencana Kunjungan</td>
-                    <td style="padding: 0.75rem 0; text-align: right; color: var(--color-primary); font-weight: 700;">
-                        {{ \Carbon\Carbon::parse($order->visit_date)->isoFormat('dddd, D MMMM Y') }}
-                    </td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.75rem 0; color: var(--text-muted);">Kuantitas / Jumlah Peserta</td>
-                    <td style="padding: 0.75rem 0; text-align: right; color: #ffffff; font-weight: 600;">
-                        {{ $order->quantity }} {{ $order->isGeneral() ? 'Orang Pengunjung' : 'Siswa / Anggota' }}
-                    </td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.75rem 0; color: var(--text-muted);">Tarif Satuan</td>
-                    <td style="padding: 0.75rem 0; text-align: right; color: #ffffff;">
-                        IDR {{ number_format($order->unit_price, 0, ',', '.') }}
-                    </td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                    <td style="padding: 0.75rem 0; color: var(--text-muted);">Biaya Fasilitas & Wahana Wisata</td>
-                    <td style="padding: 0.75rem 0; text-align: right; color: #00e676; font-weight: 600;">
-                        Termasuk (Gratis)
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 1.15rem 0 0.5rem; font-weight: 800; color: #ffffff; font-size: 1rem; text-transform: uppercase;">
-                        Total Tagihan Pembayaran
-                    </td>
-                    <td style="padding: 1.15rem 0 0.5rem; text-align: right; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--color-primary);">
-                        IDR {{ number_format($order->total_price, 0, ',', '.') }}
-                    </td>
-                </tr>
-            </table>
-
-            <!-- Data Kontak Pemesan -->
-            <div style="background-color: #0b0e15; border: 1px solid var(--border-color); border-radius: 4px; padding: 1rem; margin-top: 1rem;">
-                <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.65rem;">
-                    Identitas Pemesan & Kontak
-                </div>
-                <div style="font-size: 0.85rem; color: #ffffff; line-height: 1.7;">
-                    @if($order->isSchool())
-                        <div>Nama Sekolah / Institusi: <strong>{{ $order->school_name }}</strong></div>
-                        <div>Penanggung Jawab (PIC): <strong>{{ $order->pic_name }}</strong> ({{ $order->pic_position }})</div>
-                    @else
-                        <div>Nama Lengkap: <strong>{{ $order->customer_name }}</strong></div>
-                    @endif
-                    <div>Alamat Email: <strong>{{ $order->customer_email }}</strong></div>
-                    <div>Nomor WhatsApp / HP: <strong>{{ $order->customer_phone }}</strong></div>
-                </div>
-            </div>
+        <div class="step-item active">
+            <span class="step-number">3</span>
+            Pembayaran
         </div>
 
-        <!-- PANDUAN & KETENTUAN KUNJUNGAN -->
-        <div class="card" style="border-left: 4px solid var(--color-primary); background-color: #0e121b;">
-            <div style="font-size: 0.75rem; color: var(--color-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
-                Ketentuan Masuk Gerbang Wisata
-            </div>
-            <ul style="list-style: none; font-size: 0.82rem; color: var(--text-muted); line-height: 1.8;">
-                <li>- Jam operasional wahana: 08.00 - 17.00 WIB setiap hari.</li>
-                <li>- Tiket ini berlaku khusus untuk tanggal kunjungan yang tercantum di atas.</li>
-                <li>- Setelah pembayaran lunas, E-Ticket digital dengan QR Code resmi akan terbit seketika.</li>
-                <li>- Tunjukkan QR Code pada perangkat ponsel Anda langsung ke petugas turnstile gerbang masuk.</li>
-            </ul>
+        <div class="step-line"></div>
+
+        <div class="step-item">
+            <span class="step-number">4</span>
+            E-Ticket
         </div>
     </div>
 
-    <!-- KOLOM KANAN: GATEWAY MIDTRANS & TINDAKAN PEMBAYARAN -->
-    <div>
-        <div class="card" style="background-color: #111624; border: 1px solid #243048; margin-bottom: 1.5rem;">
-            <div class="card-header" style="border-color: #243048;">
-                <div>
-                    <div style="font-size: 0.72rem; color: var(--color-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">
-                        Single Payment Gateway
-                    </div>
-                    <div class="card-title" style="margin-top: 0.2rem;">Midtrans Payment Gateway</div>
+    <!-- HEADER -->
+    <div class="checkout-heading">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:15px; flex-wrap:wrap;">
+            <div>
+                <div class="checkout-label" style="color:var(--color-primary);">
+                    PEMBAYARAN RESERVASI #{{ $order->order_number }}
                 </div>
-                <span class="badge badge-paid">Server Terhubung</span>
-            </div>
 
-            <!-- Box Status Saluran Midtrans -->
-            <div style="background-color: #090c13; border: 1px solid #1e2638; border-radius: 4px; padding: 1.15rem; margin-bottom: 1.5rem;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
-                    <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: #ffffff; font-size: 0.9rem;">
-                        METODE PEMBAYARAN TERSEDIA
-                    </span>
-                    <span style="font-size: 0.72rem; color: #94a3b8; font-weight: 700;">SANDBOX MODE</span>
-                </div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.85rem;">
-                    Satu-satunya saluran pembayaran resmi terpadu yang diintegrasikan. Mendukung pembayaran instan dengan validasi real-time.
+                <h1>Selesaikan Pembayaran</h1>
+
+                <p>
+                    Periksa kembali pesanan sebelum melanjutkan pembayaran.
                 </p>
-                <!-- Saluran Pembayaran (Badges Solid Tanpa Icon) -->
-                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
-                    <span style="display: inline-block; background-color: #1a2233; color: #e2e8f0; border: 1px solid #2e3a54; padding: 0.25rem 0.55rem; font-size: 0.72rem; font-weight: 700; border-radius: 3px;">QRIS</span>
-                    <span style="display: inline-block; background-color: #1a2233; color: #e2e8f0; border: 1px solid #2e3a54; padding: 0.25rem 0.55rem; font-size: 0.72rem; font-weight: 700; border-radius: 3px;">GOPAY</span>
-                    <span style="display: inline-block; background-color: #1a2233; color: #e2e8f0; border: 1px solid #2e3a54; padding: 0.25rem 0.55rem; font-size: 0.72rem; font-weight: 700; border-radius: 3px;">SHOPEEPAY</span>
-                    <span style="display: inline-block; background-color: #1a2233; color: #e2e8f0; border: 1px solid #2e3a54; padding: 0.25rem 0.55rem; font-size: 0.72rem; font-weight: 700; border-radius: 3px;">BCA VIRTUAL ACCOUNT</span>
-                    <span style="display: inline-block; background-color: #1a2233; color: #e2e8f0; border: 1px solid #2e3a54; padding: 0.25rem 0.55rem; font-size: 0.72rem; font-weight: 700; border-radius: 3px;">MANDIRI VA</span>
-                    <span style="display: inline-block; background-color: #1a2233; color: #e2e8f0; border: 1px solid #2e3a54; padding: 0.25rem 0.55rem; font-size: 0.72rem; font-weight: 700; border-radius: 3px;">BNI VA</span>
-                    <span style="display: inline-block; background-color: #1a2233; color: #e2e8f0; border: 1px solid #2e3a54; padding: 0.25rem 0.55rem; font-size: 0.72rem; font-weight: 700; border-radius: 3px;">BRI VA</span>
-                </div>
             </div>
 
-            <!-- Ringkasan Nominal Pembayaran -->
-            <div style="background-color: #0d121c; border: 1px solid #243048; border-radius: 4px; padding: 1.25rem; margin-bottom: 1.5rem; text-align: center;">
-                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem;">
-                    Jumlah Yang Harus Dibayar
-                </div>
-                <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.15rem; font-weight: 800; color: #ffffff; letter-spacing: -0.02em;">
-                    IDR {{ number_format($order->total_price, 0, ',', '.') }}
-                </div>
-                <div style="font-size: 0.75rem; color: var(--color-primary); font-weight: 700; margin-top: 0.25rem;">
-                    Bebas Biaya Admin Tambahan
-                </div>
-            </div>
-
-            <!-- Tombol Utama: Bayar Midtrans Snap -->
-            <button id="pay-button" class="btn btn-primary btn-block btn-lg" style="font-size: 1rem; font-weight: 800; padding: 1rem; margin-bottom: 0.85rem; letter-spacing: 0.02em;">
-                BAYAR SEKARANG DENGAN MIDTRANS
-            </button>
-
-            <!-- Tombol Pendukung: Sinkronisasi Status Server Midtrans -->
-            <a href="{{ route('orders.checkStatus', $order->id) }}" class="btn btn-secondary btn-block" style="font-size: 0.85rem; margin-bottom: 1.25rem; text-align: center;">
-                Periksa Status Transaksi (Sinkronisasi Midtrans)
+            <a href="{{ route('orders.history') }}" class="btn btn-secondary btn-sm">
+                Kembali ke Riwayat
             </a>
-
-            <!-- Tombol Alternatif / Pengujian Cepat Sandbox (Untuk Presentasi & Evaluasi Sertikom) -->
-            <div style="background-color: #0b0e15; border: 1px dashed #243048; border-radius: 4px; padding: 1rem; text-align: center; margin-bottom: 1.25rem;">
-                <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem;">
-                    Mode Pengujian / Demonstrasi Asesor
-                </div>
-                <a href="{{ route('orders.simulateSuccess', $order->id) }}" class="btn btn-outline btn-sm" style="font-size: 0.8rem; display: inline-block;">
-                    Simulasi Pembayaran Midtrans Berhasil
-                </a>
-            </div>
-
-            <!-- Info Keamanan & Webhook -->
-            <div style="border-top: 1px solid #1f273b; padding-top: 1rem; font-size: 0.75rem; color: var(--text-sub); line-height: 1.6;">
-                <div>- Enkripsi SSL 256-Bit Resmi Midtrans Sandbox.</div>
-                <div>- Sistem dilengkapi listener webhook otomatis dan fallback sinkronisasi langsung ke API Midtrans.</div>
-            </div>
-        </div>
-
-        <!-- PANDUAN PENGUJIAN MIDTRANS -->
-        <div class="card" style="background-color: #0d111a; border: 1px solid #1d2434;">
-            <div style="font-size: 0.75rem; color: #ffffff; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.65rem;">
-                Langkah Pembayaran Midtrans
-            </div>
-            <ol style="padding-left: 1.2rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.7;">
-                <li>Klik tombol <strong>"Bayar Sekarang dengan Midtrans"</strong> untuk memunculkan popup Snap.</li>
-                <li>Pilih metode pembayaran yang diinginkan (misalnya QRIS atau Virtual Account).</li>
-                <li>Lakukan penyelesaian pembayaran pada Midtrans Simulator Sandbox.</li>
-                <li>Sistem otomatis mendeteksi pelunasan dan menerbitkan E-Ticket resmi Anda.</li>
-            </ol>
         </div>
     </div>
+
+    <!-- MAIN CHECKOUT -->
+    <div class="checkout-layout">
+
+        <!-- KOLOM KIRI -->
+        <div>
+
+            <!-- DETAIL PESANAN -->
+            <div class="checkout-card">
+
+                <div class="checkout-card-heading">
+                    <div>
+                        <div class="checkout-label">Detail Pesanan</div>
+
+                        <h3>
+                            {{ $order->isGeneral()
+                                ? ($order->ticket->name ?? 'Tiket Masuk Wisata')
+                                : ($order->package->name ?? 'Paket Kunjungan Sekolah') }}
+                        </h3>
+                    </div>
+
+                    @if($order->status === 'paid')
+                        <span class="badge badge-paid">Lunas</span>
+                    @elseif($order->status === 'approved')
+                        <span class="badge badge-approved">Disetujui Admin</span>
+                    @else
+                        <span class="badge badge-pending">Menunggu Pembayaran</span>
+                    @endif
+                </div>
+
+                <div class="checkout-info-row">
+                    <div class="checkout-label">Nomor Pesanan</div>
+                    <div class="checkout-value">{{ $order->order_number }}</div>
+                </div>
+
+                <div class="checkout-info-row">
+                    <div class="checkout-label">Kategori Kunjungan</div>
+                    <div class="checkout-value">
+                        {{ $order->isGeneral()
+                            ? 'Pengunjung Umum / Mandiri'
+                            : 'Rombongan Edukasi Sekolah' }}
+                    </div>
+                </div>
+
+                <div class="checkout-info-row">
+                    <div class="checkout-label">Tanggal Kunjungan</div>
+                    <div class="checkout-value" style="color:var(--color-primary);">
+                        {{ \Carbon\Carbon::parse($order->visit_date)->isoFormat('dddd, D MMMM Y') }}
+                    </div>
+                </div>
+
+                <div class="checkout-info-row">
+                    <div class="checkout-label">Jumlah Peserta</div>
+                    <div class="checkout-value">
+                        {{ $order->quantity }}
+                        {{ $order->isGeneral() ? 'Orang' : 'Siswa / Anggota' }}
+                    </div>
+                </div>
+
+                <div class="checkout-info-row">
+                    <div class="checkout-label">Tarif Satuan</div>
+                    <div class="checkout-value">
+                        IDR {{ number_format($order->unit_price, 0, ',', '.') }}
+                    </div>
+                </div>
+
+                <div class="checkout-info-row">
+                    <div class="checkout-label">Fasilitas & Wahana</div>
+                    <div class="checkout-value">Termasuk</div>
+                </div>
+
+            </div>
+
+            <!-- IDENTITAS PEMESAN -->
+            <div class="checkout-card">
+
+                <div class="checkout-card-heading">
+                    <div>
+                        <div class="checkout-label">Informasi Kontak</div>
+                        <h3>Identitas Pemesan</h3>
+                    </div>
+                </div>
+
+                <div class="checkout-contact">
+
+                    @if($order->isSchool())
+
+                        <div>
+                            <div class="checkout-label">Nama Sekolah</div>
+                            <div class="checkout-value">{{ $order->school_name }}</div>
+                        </div>
+
+                        <div>
+                            <div class="checkout-label">Penanggung Jawab</div>
+                            <div class="checkout-value">{{ $order->pic_name }}</div>
+                        </div>
+
+                        <div>
+                            <div class="checkout-label">Jabatan</div>
+                            <div class="checkout-value">{{ $order->pic_position }}</div>
+                        </div>
+
+                    @else
+
+                        <div>
+                            <div class="checkout-label">Nama Lengkap</div>
+                            <div class="checkout-value">{{ $order->customer_name }}</div>
+                        </div>
+
+                    @endif
+
+                    <div>
+                        <div class="checkout-label">Email</div>
+                        <div class="checkout-value">{{ $order->customer_email }}</div>
+                    </div>
+
+                    <div>
+                        <div class="checkout-label">Nomor WhatsApp</div>
+                        <div class="checkout-value">{{ $order->customer_phone }}</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- KETENTUAN -->
+            <div class="checkout-card">
+                <div class="checkout-label" style="color:var(--color-primary);">
+                    Ketentuan Kunjungan
+                </div>
+
+                <div class="checkout-note">
+                    <div>- Jam operasional wahana: 08.00 - 17.00 WIB.</div>
+                    <div>- Tiket berlaku sesuai tanggal kunjungan.</div>
+                    <div>- E-Ticket digital akan diterbitkan setelah pembayaran terverifikasi.</div>
+                    <div>- Tunjukkan QR Code kepada petugas saat memasuki area wisata.</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- KOLOM KANAN: RINGKASAN PEMBAYARAN -->
+        <div class="checkout-summary">
+
+            <div class="checkout-card">
+
+                <div class="checkout-card-heading">
+                    <div>
+                        <div class="checkout-label">Ringkasan Pembayaran</div>
+                        <h3>Detail Tagihan</h3>
+                    </div>
+
+                    <span class="badge badge-paid">Midtrans</span>
+                </div>
+
+                <div class="checkout-info-row">
+                    <div class="checkout-label">Subtotal</div>
+                    <div class="checkout-value">
+                        IDR {{ number_format($order->total_price, 0, ',', '.') }}
+                    </div>
+                </div>
+
+                <div class="checkout-info-row">
+                    <div class="checkout-label">Biaya Admin</div>
+                    <div class="checkout-value">Termasuk</div>
+                </div>
+
+                <div class="checkout-total">
+                    <div class="checkout-label">Total yang Harus Dibayar</div>
+
+                    <div class="checkout-total-amount">
+                        IDR {{ number_format($order->total_price, 0, ',', '.') }}
+                    </div>
+
+                    <div style="font-size:.73rem; color:var(--text-muted); margin-top:5px;">
+                        Bebas biaya admin tambahan
+                    </div>
+                </div>
+
+                <div>
+                    <div class="checkout-label">Metode Pembayaran</div>
+
+                    <div class="payment-badges">
+                        <span>QRIS</span>
+                        <span>GoPay</span>
+                        <span>ShopeePay</span>
+                        <span>BCA VA</span>
+                        <span>Mandiri VA</span>
+                        <span>BNI VA</span>
+                        <span>BRI VA</span>
+                    </div>
+                </div>
+
+                <!-- TOMBOL BAYAR -->
+                <button
+                    type="button"
+                    id="pay-button"
+                    class="btn btn-primary checkout-pay-button"
+                >
+                    BAYAR SEKARANG
+                </button>
+
+                <!-- CEK STATUS -->
+                <a
+                    href="{{ route('orders.checkStatus', $order->id) }}"
+                    class="btn btn-secondary checkout-secondary-button"
+                >
+                    Periksa Status Transaksi
+                </a>
+
+                <!-- SIMULASI SANDBOX -->
+                <div style="border-top:1px solid var(--border-color); margin-top:18px; padding-top:15px;">
+                    <div class="checkout-label">
+                        Mode Pengujian / Demonstrasi
+                    </div>
+
+                    <a
+                        href="{{ route('orders.simulateSuccess', $order->id) }}"
+                        class="btn btn-outline btn-sm"
+                        style="display:block; text-align:center; margin-top:10px;"
+                    >
+                        Simulasi Pembayaran Berhasil
+                    </a>
+                </div>
+
+                <div class="checkout-note">
+                    Transaksi diproses melalui Midtrans Payment Gateway.
+                    Status pembayaran dapat diperiksa kembali melalui sistem.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MIDTRANS OVERLAY -->
+    <div class="midtrans-overlay" id="midtrans-overlay"></div>
+
+    <!-- MIDTRANS PANEL KANAN -->
+    <div class="midtrans-drawer" id="midtrans-drawer">
+
+        <div class="midtrans-header">
+            <div>
+                <h3>Pembayaran Midtrans</h3>
+                <p>Selesaikan pembayaran pesanan Anda</p>
+            </div>
+
+            <button
+                type="button"
+                class="midtrans-close"
+                id="close-midtrans"
+            >
+                Tutup
+            </button>
+        </div>
+
+        <div class="midtrans-body">
+            <div id="snap-container"></div>
+        </div>
+
+    </div>
+
 </div>
+
 @endsection
 
 @push('scripts')
-<!-- Midtrans Snap SDK (Sandbox Environment) -->
-<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
-<script>
-    const snapToken = "{{ $snapToken }}";
-    const payBtn = document.getElementById('pay-button');
 
-    if (payBtn) {
-        payBtn.addEventListener('click', function () {
-            if (typeof snap !== 'undefined' && snapToken && !snapToken.startsWith('DEMO-SNAP')) {
-                snap.pay(snapToken, {
-                    onSuccess: function(result){
-                        window.location.href = "{{ route('midtrans.finish') }}?order_id={{ $order->order_number }}&status_code=200&transaction_status=settlement";
-                    },
-                    onPending: function(result){
-                        alert("Menunggu penyelesaian pembayaran. Anda dapat memeriksa status kapan saja.");
-                        window.location.href = "{{ route('orders.checkout', $order->id) }}";
-                    },
-                    onError: function(result){
-                        alert("Transaksi belum berhasil diproses oleh Midtrans. Silakan coba kembali.");
-                    },
-                    onClose: function(){
-                        // Pengguna menutup dialog Snap
-                    }
-                });
-            } else {
-                if (confirm('Buka simulasi pembayaran Midtrans Sandbox sukses untuk reservasi ini?')) {
-                    window.location.href = "{{ route('orders.simulateSuccess', $order->id) }}";
-                }
-            }
-        });
-    }
+<!-- MIDTRANS SNAP SDK SANDBOX -->
+<script
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="{{ config('midtrans.client_key') }}">
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const snapToken = @json($snapToken);
+
+    const payButton = document.getElementById('pay-button');
+    const drawer = document.getElementById('midtrans-drawer');
+    const overlay = document.getElementById('midtrans-overlay');
+    const closeButton = document.getElementById('close-midtrans');
+
+    let snapEmbedded = false;
+
+    function openMidtrans() {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMidtrans() {
+        drawer.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    closeButton.addEventListener('click', closeMidtrans);
+    overlay.addEventListener('click', closeMidtrans);
+
+    payButton.addEventListener('click', function () {
+
+        // Jika token demo atau tidak tersedia,
+        // pertahankan fitur simulasi Sandbox sebelumnya.
+        if (
+            typeof snap === 'undefined' ||
+            !snapToken ||
+            snapToken.startsWith('DEMO-SNAP')
+        ) {
+            if (confirm('Token Midtrans belum tersedia. Buka simulasi pembayaran untuk pesanan ini?')) {
+                window.location.href =
+                    @json(route('orders.simulateSuccess', $order->id));
+            }
+
+            return;
+        }
+
+        openMidtrans();
+
+        // Embedded Snap hanya dipasang sekali.
+        if (snapEmbedded) {
+            return;
+        }
+
+        snapEmbedded = true;
+
+        try {
+
+            snap.embed(snapToken, {
+
+                embedId: 'snap-container',
+
+                onSuccess: function(result) {
+
+                    window.location.href =
+                        @json(route('midtrans.finish')) +
+                        '?order_id=' + encodeURIComponent(@json($order->order_number)) +
+                        '&status_code=200&transaction_status=settlement';
+
+                },
+
+                onPending: function(result) {
+
+                    alert('Pembayaran masih menunggu penyelesaian.');
+
+                    window.location.href =
+                        @json(route('orders.checkout', $order->id));
+
+                },
+
+                onError: function(result) {
+
+                    alert('Transaksi belum berhasil diproses oleh Midtrans. Silakan coba kembali.');
+
+                    snapEmbedded = false;
+
+                },
+
+                onClose: function() {
+
+                    closeMidtrans();
+
+                }
+
+            });
+
+        } catch (error) {
+
+            console.error('Midtrans Embed Error:', error);
+
+            alert('Terjadi kesalahan saat membuka pembayaran Midtrans.');
+
+            snapEmbedded = false;
+            closeMidtrans();
+
+        }
+
+    });
+
+});
+</script>
+
 @endpush
